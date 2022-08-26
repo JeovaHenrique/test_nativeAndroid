@@ -4,8 +4,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.helloword.api.SearchResult
+import com.example.helloword.api.createGitHubApiService
 import com.example.helloword.models.Repo
 import com.example.helloword.reposlist.ReposAdapter
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 class MainActivity : AppCompatActivity() {
@@ -20,19 +25,17 @@ class MainActivity : AppCompatActivity() {
         list.layoutManager = LinearLayoutManager(this)
         list.adapter = adapter
 
-        val sampleData = listOf(
-            Repo("Repo 1"),
-            Repo("Repo 2"),
-            Repo("Repo 3"),
-            Repo("Repo 4"),
-            Repo("Repo 5"),
-            Repo("Repo 6"),
-            Repo("Repo 7"),
-            Repo("Repo 8"),
-            Repo("Repo 9"),
-            Repo("Repo 10")
-        )
+        val service = createGitHubApiService()
+        service.searchRepositories("android").enqueue(object : Callback<SearchResult> {
+            override fun onResponse(call: Call<SearchResult>, response: Response<SearchResult>) {
+                val repos = response.body()?.items.orEmpty()
+                adapter.submitList(repos)
+            }
 
-        adapter.submitList(sampleData)
+            override fun onFailure(call: Call<SearchResult>, t: Throwable) {
+                //handle failure
+            }
+
+        })
     }
 }
