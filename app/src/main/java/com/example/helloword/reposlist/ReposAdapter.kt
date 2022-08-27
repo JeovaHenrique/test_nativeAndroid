@@ -1,6 +1,5 @@
 package com.example.helloword.reposlist
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +12,7 @@ import com.example.helloword.models.Repo
 
 class RepoViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-    private val name : TextView = view.findViewById(R.id.name)
+    private val name : TextView = view.findViewById(R.id.name1)
 
     fun bind(repo: Repo) {
         name.text = repo.name

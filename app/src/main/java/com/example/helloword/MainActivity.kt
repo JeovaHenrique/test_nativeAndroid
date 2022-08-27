@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         adapter = ReposAdapter { repo ->
-            Toast.makeText(this, repo.name,Toast.LENGTH_SHORT).show()
+            RepoDetailsActivity.startActivity(this,repo)
         }
 
         val list: RecyclerView = findViewById(R.id.list)
